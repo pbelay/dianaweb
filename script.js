@@ -284,22 +284,24 @@ function calcularPuntos(x, y) {
         puntos = 10;
     } else if (radio <= 40) {
         puntos = 9;
-    } else if (radio <= 80) {
+    } else if (radio <= 60) {
         puntos = 8;
-    } else if (radio <= 120) {
+    } else if (radio <= 80) {
         puntos = 7;
-    } else if (radio <= 160) {
+    } else if (radio <= 100) {
         puntos = 6;
-    } else if (radio <= 200) {
+    } else if (radio <= 120) {
         puntos = 5;
-    } else if (radio <= 240) {
+    } else if (radio <= 140) {
         puntos = 4;
-    } else if (radio <= 280) {
+    } else if (radio <= 160) {
         puntos = 3;
-    } else if (radio <= 320) {
+    } else if (radio <= 180) {
         puntos = 2;
-    } else {
+    } else if (radio <= 200) {
         puntos = 1;
+    } else {
+        puntos = 0;
     }
 
     return puntos;
