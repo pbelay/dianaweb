@@ -1,5 +1,6 @@
 let db;
 let puntos = [];
+let tiradas = new Array();
 
 window.onload = function() {
     let request = indexedDB.open("DianaDB", 1);
@@ -229,8 +230,10 @@ function limpiarDiana() {
 
 $(document).ready(function() {
     $('#nueva-tirada').click(function() {
-        /*
+        
         limpiarDiana(); // Limpiar la diana
+        // Copiar los valores del array puntos al array de tiradas
+        tiradas.push(puntos.slice());
 
         let tiradaNum = $('#tabla-puntuaciones tr').length + 1;
         let puntosTirada = 0; // Inicializar los puntos de la tirada
@@ -267,8 +270,8 @@ $(document).ready(function() {
         // Evento para mostrar los puntos totales de la tirada
         $(`#tirada-${tiradaNum} .mostrar-puntos-tirada`).click(function() {
             alert(`Puntos totales de la tirada ${tiradaNum}: ${puntosTirada}`);
-        });*/
-        alert ("TODO-Implementar")
+        });
+        
     });
 });
 
