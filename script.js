@@ -230,7 +230,8 @@ function limpiarDiana() {
 
 $(document).ready(function() {
     $('#nueva-tirada').click(function() {
-        
+        alert ("TODO: implementar");
+        /*
         limpiarDiana(); // Limpiar la diana
         // Copiar los valores del array puntos al array de tiradas
         tiradas.push(puntos.slice());
@@ -270,7 +271,7 @@ $(document).ready(function() {
         // Evento para mostrar los puntos totales de la tirada
         $(`#tirada-${tiradaNum} .mostrar-puntos-tirada`).click(function() {
             alert(`Puntos totales de la tirada ${tiradaNum}: ${puntosTirada}`);
-        });
+        });*/
         
     });
 });
