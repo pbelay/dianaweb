@@ -18,6 +18,7 @@ window.onload = function() {
         let objectStore = db.createObjectStore("Puntos", { autoIncrement: true });
         objectStore.createIndex("x", "x", { unique: false });
         objectStore.createIndex("y", "y", { unique: false });
+        objectStore.createIndex("puntos", "puntos", { unique: false });
     };
 
     dibujarDiana();
@@ -169,7 +170,7 @@ function calcularPuntos(x, y) {
     const distances = [200, 180, 160, 140, 120, 100, 80, 60, 40, 20];
     const scores = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     let distancia = Math.sqrt(Math.pow(x - 200, 2) + Math.pow(y - 200, 2));
-    for (let i = 0; i < distances.length; i++) {
+    for (let i = distances.length - 1; i >= 0; i--) {
         if (distancia <= distances[i]) {
             return scores[i];
         }
