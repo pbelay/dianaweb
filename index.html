@@ -4,22 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diana de Disparos</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+z2TI+USb/uq30w5EExl10PfWVfG2k1frj5IkvK" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Diana de Disparos</h1>
-        <div class="diana-container">
-            <canvas id="diana" width="400" height="400"></canvas>
-            <canvas id="dianaCanvas" width="400" height="400"></canvas>
+        <h1 class="mt-5 mb-4">Diana de Disparos</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="diana-container">
+                    <canvas id="diana" width="400" height="400"></canvas>
+                    <canvas id="dianaCanvas" width="400" height="400"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <button id="calcular-centro" class="btn btn-primary">Calcular Centro Medio</button>
+                    <button id="borrar-datos" class="btn btn-danger">Borrar Datos</button>
+                    <button id="calcular-total" class="btn btn-success">Calcular Total de Puntos</button>
+                </div>
+                <div id="resultado" class="mb-4"></div>
+            </div>
         </div>
-        <div>
-            <button id="calcular-centro">Calcular Centro Medio</button>
-            <button id="borrar-datos">Borrar Datos</button>
-            <button id="calcular-total">Calcular Total de Puntos</button>
-        </div>
-        <div id="resultado"></div>
     </div>
+
+    <!-- Bootstrap JS -->
+ <!-- Ligazóns aos scripts de Bootstrap -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
     <script src="script.js"></script>
 </body>
 </html>
