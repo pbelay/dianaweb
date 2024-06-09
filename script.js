@@ -144,7 +144,8 @@ function calcularCentroMedio() {
     let ctx = canvas.getContext('2d');
     ctx.beginPath();
     ctx.arc(centroX, centroY, 10, 0, Math.PI * 2);
-    ctx.strokeStyle = 'blue';
+    ctx.strokeStyle = 'green';
+    ctx.lineWidth = 7;
     ctx.stroke();
     ctx.closePath();
 }
@@ -191,4 +192,115 @@ function calcularTotalPuntos() {
     }
 
     document.getElementById('resultado').innerText = `Total de Puntos: ${totalPuntos}`;
+}
+
+
+
+// Función para obtener el color según la puntuación
+function obtenerColor(puntos) {
+    switch (puntos) {
+        case 1:
+        case 2:
+            return 'white';
+        case 3:
+        case 4:
+            return 'black';
+        case 5:
+        case 6:
+            return 'blue';
+        case 7:
+        case 8:
+            return 'red';
+        case 9:
+        case 10:
+            return 'yellow';
+        default:
+            return 'transparent'; // Si la puntuación no es válida, devolvemos transparente
+    }
+}
+
+// Función para limpiar la diana
+function limpiarDiana() {
+    let canvas = document.getElementById('dianaCanvas');
+    let ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+
+$(document).ready(function() {
+    $('#nueva-tirada').click(function() {
+        /*
+        limpiarDiana(); // Limpiar la diana
+
+        let tiradaNum = $('#tabla-puntuaciones tr').length + 1;
+        let puntosTirada = 0; // Inicializar los puntos de la tirada
+
+        // Construir la fila de la tabla
+        let fila = `<tr id="tirada-${tiradaNum}">`;
+
+        // Añadir evento click al canvas para registrar los puntos de cada disparo
+        $('#dianaCanvas').click(function(event) {
+            let canvas = document.getElementById('dianaCanvas');
+            let rect = canvas.getBoundingClientRect();
+            let x = event.clientX - rect.left; // Coordenada x del click relativa al canvas
+            let y = event.clientY - rect.top; // Coordenada y del click relativa al canvas
+            let puntos = calcularPuntos(x, y); // Calcular los puntos del disparo según la posición del click
+            let color = obtenerColor(puntos); // Obtener el color del disparo
+            puntosTirada += puntos; // Sumar los puntos del disparo a los puntos totales de la tirada
+            fila += `
+                <td style="background-color: ${color};">${puntos}</td>
+            `;
+        });
+
+        // Añadir botón para mostrar puntos totales de la tirada
+        fila += `
+            <td>
+                <button class="btn btn-info mostrar-puntos-tirada">Mostrar Puntos</button>
+            </td>
+        `;
+
+        fila += `</tr>`;
+        
+        // Añadir la fila a la tabla
+        $('#tabla-puntuaciones').append(fila);
+        
+        // Evento para mostrar los puntos totales de la tirada
+        $(`#tirada-${tiradaNum} .mostrar-puntos-tirada`).click(function() {
+            alert(`Puntos totales de la tirada ${tiradaNum}: ${puntosTirada}`);
+        });*/
+        alert ("TODO-Implementar")
+    });
+});
+
+
+
+
+function calcularPuntos(x, y) {
+    let radio = Math.sqrt((x - 200) * (x - 200) + (y - 200) * (y - 200)); // Distancia desde el centro de la diana
+    let puntos = 0;
+
+    // Determinar el número de puntos en función del radio
+    if (radio <= 20) {
+        puntos = 10;
+    } else if (radio <= 40) {
+        puntos = 9;
+    } else if (radio <= 80) {
+        puntos = 8;
+    } else if (radio <= 120) {
+        puntos = 7;
+    } else if (radio <= 160) {
+        puntos = 6;
+    } else if (radio <= 200) {
+        puntos = 5;
+    } else if (radio <= 240) {
+        puntos = 4;
+    } else if (radio <= 280) {
+        puntos = 3;
+    } else if (radio <= 320) {
+        puntos = 2;
+    } else {
+        puntos = 1;
+    }
+
+    return puntos;
 }
