@@ -227,11 +227,37 @@ function limpiarDiana() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+// Función para descargar los puntos en formato JSON
+function descargarJSON() {
+    let puntos = obtenerPuntosDiana(); // Obtener los puntos en la posición de la diana y sus valores
+    let jsonPuntos = JSON.stringify(puntos, null, 2); // Convertir los puntos a formato JSON con formato legible
+
+    // Crear un enlace de descarga
+    let enlaceDescarga = document.createElement('a');
+    enlaceDescarga.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(jsonPuntos));
+    enlaceDescarga.setAttribute('download', 'puntos_diana.json');
+    document.body.appendChild(enlaceDescarga);
+
+    // Simular clic en el enlace para iniciar la descarga
+    enlaceDescarga.click();
+
+    // Eliminar el enlace después de la descarga
+    document.body.removeChild(enlaceDescarga);
+}
 
 $(document).ready(function() {
+
+    $('#descargar-json').click(function() {
+        descargarJSON();
+    });
+
+
     $('#nueva-tirada').click(function() {
+<<<<<<< HEAD
         alert ("TODO: implementar");
         /*
+=======
+>>>>>>> 941b86e (merge)
         limpiarDiana(); // Limpiar la diana
         // Copiar los valores del array puntos al array de tiradas
         tiradas.push(puntos.slice());
@@ -271,8 +297,12 @@ $(document).ready(function() {
         // Evento para mostrar los puntos totales de la tirada
         $(`#tirada-${tiradaNum} .mostrar-puntos-tirada`).click(function() {
             alert(`Puntos totales de la tirada ${tiradaNum}: ${puntosTirada}`);
+<<<<<<< HEAD
         });*/
         
+=======
+        });
+>>>>>>> 941b86e (merge)
     });
 });
 
@@ -306,6 +336,30 @@ function calcularPuntos(x, y) {
         puntos = 1;
     } else {
         puntos = 0;
+    }
+
+    return puntos;
+}
+
+// Función para obtener los puntos en la posición de la diana y sus valores
+function obtenerPuntosDiana() {
+    let puntos = [];
+    let canvas = document.getElementById('dianaCanvas');
+    let ctx = canvas.getContext('2d');
+
+    // Iterar sobre cada punto en la diana y obtener su valor
+    for (let x = 0; x < canvas.width; x++) {
+        for (let y = 0; y < canvas.height; y++) {
+            let color = ctx.getImageData(x, y, 1, 1).data; // Obtener el color del punto en la posición (x, y)
+            let puntosDisparo = calcularPuntos(x, y); // Calcular los puntos del disparo según la posición en la diana
+
+            puntos.push({
+                x: x,
+                y: y,
+                color: color,
+                puntos: puntosDisparo
+            });
+        }
     }
 
     return puntos;
