@@ -254,10 +254,14 @@ $(document).ready(function() {
 
     $('#nueva-tirada').click(function() {
 <<<<<<< HEAD
+<<<<<<< HEAD
         alert ("TODO: implementar");
         /*
 =======
 >>>>>>> 941b86e (merge)
+=======
+        
+>>>>>>> parent of 9521ba6 (tirada)
         limpiarDiana(); // Limpiar la diana
         // Copiar los valores del array puntos al array de tiradas
         tiradas.push(puntos.slice());
@@ -298,7 +302,11 @@ $(document).ready(function() {
         $(`#tirada-${tiradaNum} .mostrar-puntos-tirada`).click(function() {
             alert(`Puntos totales de la tirada ${tiradaNum}: ${puntosTirada}`);
 <<<<<<< HEAD
+<<<<<<< HEAD
         });*/
+=======
+        });
+>>>>>>> parent of 9521ba6 (tirada)
         
 =======
         });
