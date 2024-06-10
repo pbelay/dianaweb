@@ -110,7 +110,8 @@ function dibujarPuntos() {
     for (let punto of puntos) {
         ctx.beginPath();
         ctx.arc(punto.x, punto.y, 5, 0, Math.PI * 2);
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = 'rgb(120, 200, 150)';
+
         ctx.fill();
         ctx.closePath();
     }
@@ -139,8 +140,10 @@ function calcularCentroMedio() {
     let ctx = canvas.getContext('2d');
     ctx.beginPath();
     ctx.arc(centroX, centroY, 10, 0, Math.PI * 2);
-    ctx.strokeStyle = 'green';
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgb(10, 220, 010)';
+
+
+    ctx.lineWidth = 4;
     ctx.stroke();
     ctx.closePath();
 }

@@ -1,4 +1,4 @@
-body {
+/*body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -10,12 +10,12 @@ body {
 
 .container {
     text-align: center;
-    background-color: #fff;
+   background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
+*/
 .diana-container {
     position: relative;
     display: inline-block;
@@ -42,7 +42,7 @@ button {
     position: absolute;
     width: 10px;
     height: 10px;
-    background-color: red;
+    background-color: rgb(15, 234, 34);
     border-radius: 50%;
     cursor: pointer;
     transform: translate(-50%, -50%);
