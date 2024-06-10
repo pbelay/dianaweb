@@ -11,23 +11,38 @@
 <body>
     <div class="container">
         <h1 class="mt-5 mb-4">Diana de Disparos</h1>
+        <div class="container mt-5">
+            <div class="btn-group" role="group" aria-label="Menu">
+                <button id="calcular-centro" class="btn btn-primary">Calcular Centro Medio</button>
+                <button id="borrar-datos" class="btn btn-danger">Borrar Datos</button>
+                <button id="calcular-total" class="btn btn-success">Calcular Total de Puntos</button>
+                <button id="descargar-json" class="btn btn-primary mt-3">Descargar Puntos en JSON</button>
+
+ 
+            </div>
+            <div class="row">
+                <br>
+            </div>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="diana-container">
                     <canvas id="diana" width="400" height="400"></canvas>
-                    <canvas id="dianaCanvas" width="400" height="400"></canvas>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="mb-3">
-                    <button id="calcular-centro" class="btn btn-primary">Calcular Centro Medio</button>
-                    <button id="borrar-datos" class="btn btn-danger">Borrar Datos</button>
-                    <button id="calcular-total" class="btn btn-success">Calcular Total de Puntos</button>
-                    <button id="descargar-json" class="btn btn-primary mt-3">Descargar Puntos en JSON</button>
+                <canvas id="dianaCanvas" width="400" height="400"></canvas>
 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                   
                 </div>
                 <div id="resultado" class="mb-4"></div>
             </div>
+
         </div>
     </div>
 
