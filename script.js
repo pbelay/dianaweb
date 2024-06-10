@@ -229,7 +229,7 @@ function limpiarDiana() {
 
 // Función para descargar los puntos en formato JSON
 function descargarJSON() {
-    let puntos = obtenerPuntosDiana(); // Obtener los puntos en la posición de la diana y sus valores
+    //Array Global cos puntos
     let jsonPuntos = JSON.stringify(puntos, null, 2); // Convertir los puntos a formato JSON con formato legible
 
     // Crear un enlace de descarga
@@ -253,13 +253,10 @@ $(document).ready(function() {
 
 
     $('#nueva-tirada').click(function() {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         alert ("TODO: implementar");
         /*
-=======
->>>>>>> 941b86e (merge)
-=======
+
         
 >>>>>>> parent of 9521ba6 (tirada)
         limpiarDiana(); // Limpiar la diana
@@ -304,15 +301,9 @@ $(document).ready(function() {
 <<<<<<< HEAD
 <<<<<<< HEAD
         });*/
-=======
         });
->>>>>>> parent of 9521ba6 (tirada)
         
-=======
         });
->>>>>>> 941b86e (merge)
-    });
-});
 
 
 
