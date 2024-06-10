@@ -124,7 +124,7 @@ function dibujarPuntos() {
 
 function calcularCentroMedio() {
     if (puntos.length === 0) {
-        document.getElementById('resultado').innerText = "No hay puntos registrados.";
+        document.getElementById('resultado').innerText = "Non hai puntos rexistrados.";
         return;
     }
 
@@ -182,7 +182,7 @@ function calcularPuntos(x, y) {
 
 function calcularTotalPuntos() {
     if (puntos.length === 0) {
-        document.getElementById('resultado').innerText = "No hay puntos registrados.";
+        document.getElementById('resultado').innerText = "Non hai puntos rexistrados.";
         return;
     }
 
@@ -230,7 +230,11 @@ function limpiarDiana() {
 // Función para descargar los puntos en formato JSON
 function descargarJSON() {
     //Array Global cos puntos
-    let jsonPuntos = JSON.stringify(puntos, null, 2); // Convertir los puntos a formato JSON con formato legible
+    let datos = new Object();
+    datos.puntos=puntos; 
+    datos.arqueiro=document.getElementById("nome").value    ;
+    datos.tiradas=document.getElementById("frechas").value;
+    let jsonPuntos = JSON.stringify(datos, null, 2); // Convertir los puntos a formato JSON con formato legible
 
     // Crear un enlace de descarga
     let enlaceDescarga = document.createElement('a');
