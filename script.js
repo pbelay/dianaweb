@@ -189,7 +189,7 @@ function calcularPuntos(x, y) {
     
     let distancia = Math.sqrt((x - 200) * (x - 200) + (y - 200) * (y - 200)); // Distancia desde el centro de la diana
 
-    if (distancia <= 20) return 10;
+    if (distancia < 20) return 10;
     else if (distancia <= 40) return 9;
     else if (distancia <= 60) return 8;
     else if (distancia <= 80) return 7;
