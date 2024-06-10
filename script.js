@@ -168,7 +168,14 @@ function calcularTotalPuntos() {
 }
 
 function descargarJSON() {
-    let json = JSON.stringify(puntos, null, 2);
+    let exporta = new Object();
+    exporta.nome=document.getElementById("nome").value ;
+    exporta.frechas=document.getElementById("frechas").value;
+    exporta.puntos = puntos;
+    
+
+
+    let json = JSON.stringify(exporta, null, 2);
     let blob = new Blob([json], { type: "application/json" });
     let url = URL.createObjectURL(blob);
 
@@ -179,20 +186,19 @@ function descargarJSON() {
 }
 
 function calcularPuntos(x, y) {
-    let dx = x - 200;
-    let dy = y - 200;
-    let distancia = Math.sqrt(dx * dy + dy * dy);
+    
+    let distancia = Math.sqrt((x - 200) * (x - 200) + (y - 200) * (y - 200)); // Distancia desde el centro de la diana
 
-    if (distancia < 20) return 10;
-    else if (distancia < 40) return 9;
-    else if (distancia < 60) return 8;
-    else if (distancia < 80) return 7;
-    else if (distancia < 100) return 6;
-    else if (distancia < 120) return 5;
-    else if (distancia < 140) return 4;
-    else if (distancia < 160) return 3;
-    else if (distancia < 180) return 2;
-    else if (distancia < 200) return 1;
+    if (distancia <= 20) return 10;
+    else if (distancia <= 40) return 9;
+    else if (distancia <= 60) return 8;
+    else if (distancia <= 80) return 7;
+    else if (distancia <= 100) return 6;
+    else if (distancia <= 120) return 5;
+    else if (distancia <= 140) return 4;
+    else if (distancia <= 160) return 3;
+    else if (distancia <= 180) return 2;
+    else if (distancia <= 200) return 1;
     else return 0;
 }
 
