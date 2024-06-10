@@ -1,6 +1,5 @@
 let db;
 let puntos = [];
-let tiradas = new Array();
 
 window.onload = function() {
     let request = indexedDB.open("DianaDB", 1);
@@ -24,10 +23,7 @@ window.onload = function() {
 
     dibujarDiana();
 
-    let canvas = document.getElementById('dianaCanvas');
     let diana = document.getElementById('diana');
-    canvas.width = diana.width;
-    canvas.height = diana.height;
 
     diana.onclick = function(event) {
         let rect = diana.getBoundingClientRect();
@@ -48,6 +44,10 @@ window.onload = function() {
     document.getElementById('calcular-total').onclick = function() {
         calcularTotalPuntos();
     };
+
+    document.getElementById('descargar-json').onclick = function() {
+        descargarJSON();
+    };
 };
 
 function dibujarDiana() {
@@ -55,7 +55,7 @@ function dibujarDiana() {
     let ctx = canvas.getContext('2d');
     const colors = ['white', 'white', 'black', 'black', 'blue', 'blue', 'red', 'red', 'yellow', 'yellow'];
     const radius = [200, 180, 160, 140, 120, 100, 80, 60, 40, 20];
-    
+
     for (let i = 0; i < radius.length; i++) {
         ctx.beginPath();
         ctx.arc(200, 200, radius[i], 0, Math.PI * 2);
@@ -66,11 +66,6 @@ function dibujarDiana() {
         ctx.stroke();
         ctx.closePath();
     }
-
-    // Copiar el contenido del canvas de la diana al canvas dianaCanvas
-    let dianaCanvas = document.getElementById('dianaCanvas');
-    let ctxCanvas = dianaCanvas.getContext('2d');
-    ctxCanvas.drawImage(canvas, 0, 0);
 }
 
 function agregarPunto(x, y, puntos) {
@@ -105,13 +100,12 @@ function listarPuntos() {
 }
 
 function dibujarPuntos() {
-    let canvas = document.getElementById('dianaCanvas');
+    let canvas = document.getElementById('diana');
     let ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Redibujar la diana
-    let diana = document.getElementById('diana');
-    ctx.drawImage(diana, 0, 0);
+    dibujarDiana();
 
     for (let punto of puntos) {
         ctx.beginPath();
@@ -140,13 +134,13 @@ function calcularCentroMedio() {
     let centroY = sumaY / puntos.length;
 
     document.getElementById('resultado').innerText = `Centro Medio: (${centroX.toFixed(2)}, ${centroY.toFixed(2)})`;
-    
-    let canvas = document.getElementById('dianaCanvas');
+
+    let canvas = document.getElementById('diana');
     let ctx = canvas.getContext('2d');
     ctx.beginPath();
     ctx.arc(centroX, centroY, 10, 0, Math.PI * 2);
     ctx.strokeStyle = 'green';
-    ctx.lineWidth = 7;
+    ctx.lineWidth = 2;
     ctx.stroke();
     ctx.closePath();
 }
@@ -154,216 +148,51 @@ function calcularCentroMedio() {
 function borrarTodosLosPuntos() {
     let transaction = db.transaction(["Puntos"], "readwrite");
     let objectStore = transaction.objectStore("Puntos");
-
     let request = objectStore.clear();
 
     request.onsuccess = function() {
         console.log("Todos los puntos han sido borrados.");
-        listarPuntos();
-        document.getElementById('resultado').innerText = "";
+        puntos = [];
+        dibujarPuntos();
+        document.getElementById('resultado').innerText = "Datos borrados.";
     };
 
     request.onerror = function(event) {
-        console.log("Error al borrar todos los puntos:", event.target.errorCode);
+        console.log("Error al borrar puntos:", event.target.errorCode);
     };
 }
 
-function calcularPuntos(x, y) {
-    const distances = [200, 180, 160, 140, 120, 100, 80, 60, 40, 20];
-    const scores = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    let distancia = Math.sqrt(Math.pow(x - 200, 2) + Math.pow(y - 200, 2));
-    for (let i = distances.length - 1; i >= 0; i--) {
-        if (distancia <= distances[i]) {
-            return scores[i];
-        }
-    }
-    return 0;
-}
-
 function calcularTotalPuntos() {
-    if (puntos.length === 0) {
-        document.getElementById('resultado').innerText = "Non hai puntos rexistrados.";
-        return;
-    }
-
-    let totalPuntos = 0;
-
-    for (let punto of puntos) {
-        totalPuntos += punto.puntos;
-    }
-
-    document.getElementById('resultado').innerText = `Total de Puntos: ${totalPuntos}`;
+    let total = puntos.reduce((sum, punto) => sum + punto.puntos, 0);
+    document.getElementById('resultado').innerText = `Total de Puntos: ${total}`;
 }
 
-
-
-// Función para obtener el color según la puntuación
-function obtenerColor(puntos) {
-    switch (puntos) {
-        case 1:
-        case 2:
-            return 'white';
-        case 3:
-        case 4:
-            return 'black';
-        case 5:
-        case 6:
-            return 'blue';
-        case 7:
-        case 8:
-            return 'red';
-        case 9:
-        case 10:
-            return 'yellow';
-        default:
-            return 'transparent'; // Si la puntuación no es válida, devolvemos transparente
-    }
-}
-
-// Función para limpiar la diana
-function limpiarDiana() {
-    let canvas = document.getElementById('dianaCanvas');
-    let ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-// Función para descargar los puntos en formato JSON
 function descargarJSON() {
-    //Array Global cos puntos
-    let datos = new Object();
-    datos.puntos=puntos; 
-    datos.arqueiro=document.getElementById("nome").value    ;
-    datos.tiradas=document.getElementById("frechas").value;
-    let jsonPuntos = JSON.stringify(datos, null, 2); // Convertir los puntos a formato JSON con formato legible
+    let json = JSON.stringify(puntos, null, 2);
+    let blob = new Blob([json], { type: "application/json" });
+    let url = URL.createObjectURL(blob);
 
-    // Crear un enlace de descarga
-    let enlaceDescarga = document.createElement('a');
-    enlaceDescarga.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(jsonPuntos));
-    enlaceDescarga.setAttribute('download', 'puntos_diana.json');
-    document.body.appendChild(enlaceDescarga);
-
-    // Simular clic en el enlace para iniciar la descarga
-    enlaceDescarga.click();
-
-    // Eliminar el enlace después de la descarga
-    document.body.removeChild(enlaceDescarga);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = "puntos.json";
+    a.click();
 }
-
-$(document).ready(function() {
-
-    $('#descargar-json').click(function() {
-        descargarJSON();
-    });
-
-
-    $('#nueva-tirada').click(function() {
-
-        alert ("TODO: implementar");
-        /*
-
-        
->>>>>>> parent of 9521ba6 (tirada)
-        limpiarDiana(); // Limpiar la diana
-        // Copiar los valores del array puntos al array de tiradas
-        tiradas.push(puntos.slice());
-
-        let tiradaNum = $('#tabla-puntuaciones tr').length + 1;
-        let puntosTirada = 0; // Inicializar los puntos de la tirada
-
-        // Construir la fila de la tabla
-        let fila = `<tr id="tirada-${tiradaNum}">`;
-
-        // Añadir evento click al canvas para registrar los puntos de cada disparo
-        $('#dianaCanvas').click(function(event) {
-            let canvas = document.getElementById('dianaCanvas');
-            let rect = canvas.getBoundingClientRect();
-            let x = event.clientX - rect.left; // Coordenada x del click relativa al canvas
-            let y = event.clientY - rect.top; // Coordenada y del click relativa al canvas
-            let puntos = calcularPuntos(x, y); // Calcular los puntos del disparo según la posición del click
-            let color = obtenerColor(puntos); // Obtener el color del disparo
-            puntosTirada += puntos; // Sumar los puntos del disparo a los puntos totales de la tirada
-            fila += `
-                <td style="background-color: ${color};">${puntos}</td>
-            `;
-        });
-
-        // Añadir botón para mostrar puntos totales de la tirada
-        fila += `
-            <td>
-                <button class="btn btn-info mostrar-puntos-tirada">Mostrar Puntos</button>
-            </td>
-        `;
-
-        fila += `</tr>`;
-        
-        // Añadir la fila a la tabla
-        $('#tabla-puntuaciones').append(fila);
-        
-        // Evento para mostrar los puntos totales de la tirada
-        $(`#tirada-${tiradaNum} .mostrar-puntos-tirada`).click(function() {
-            alert(`Puntos totales de la tirada ${tiradaNum}: ${puntosTirada}`);
-<<<<<<< HEAD
-<<<<<<< HEAD
-        });*/
-        });
-        
-        });
-
-
-
 
 function calcularPuntos(x, y) {
-    let radio = Math.sqrt((x - 200) * (x - 200) + (y - 200) * (y - 200)); // Distancia desde el centro de la diana
-    let puntos = 0;
+    let dx = x - 200;
+    let dy = y - 200;
+    let distancia = Math.sqrt(dx * dy + dy * dy);
 
-    // Determinar el número de puntos en función del radio
-    if (radio <= 20) {
-        puntos = 10;
-    } else if (radio <= 40) {
-        puntos = 9;
-    } else if (radio <= 60) {
-        puntos = 8;
-    } else if (radio <= 80) {
-        puntos = 7;
-    } else if (radio <= 100) {
-        puntos = 6;
-    } else if (radio <= 120) {
-        puntos = 5;
-    } else if (radio <= 140) {
-        puntos = 4;
-    } else if (radio <= 160) {
-        puntos = 3;
-    } else if (radio <= 180) {
-        puntos = 2;
-    } else if (radio <= 200) {
-        puntos = 1;
-    } else {
-        puntos = 0;
-    }
-
-    return puntos;
+    if (distancia < 20) return 10;
+    else if (distancia < 40) return 9;
+    else if (distancia < 60) return 8;
+    else if (distancia < 80) return 7;
+    else if (distancia < 100) return 6;
+    else if (distancia < 120) return 5;
+    else if (distancia < 140) return 4;
+    else if (distancia < 160) return 3;
+    else if (distancia < 180) return 2;
+    else if (distancia < 200) return 1;
+    else return 0;
 }
 
-// Función para obtener los puntos en la posición de la diana y sus valores
-function obtenerPuntosDiana() {
-    let puntos = [];
-    let canvas = document.getElementById('dianaCanvas');
-    let ctx = canvas.getContext('2d');
-
-    // Iterar sobre cada punto en la diana y obtener su valor
-    for (let x = 0; x < canvas.width; x++) {
-        for (let y = 0; y < canvas.height; y++) {
-            let color = ctx.getImageData(x, y, 1, 1).data; // Obtener el color del punto en la posición (x, y)
-            let puntosDisparo = calcularPuntos(x, y); // Calcular los puntos del disparo según la posición en la diana
-
-            puntos.push({
-                x: x,
-                y: y,
-                color: color,
-                puntos: puntosDisparo
-            });
-        }
-    }
-
-    return puntos;
-}
